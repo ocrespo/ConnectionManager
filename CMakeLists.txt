@@ -29,8 +29,13 @@ if (NOT CONFIGURED_ONCE)
 endif()
 
 
-set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} ${warnings}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${warnings}")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
+    "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(compilation "-O2 -g")
+endif()
+
+set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} ${warnings} ${compilation}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${warnings} ${compilation}")
 
 
 # configure a header file to pass some of the CMake settings

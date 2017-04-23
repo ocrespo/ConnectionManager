@@ -6,3 +6,5 @@ set (CONNEXION_HEADERS ${CONNEXION_HEADERS} types.h) #Add .h here, just for stan
 
 add_library(ConnectionManager STATIC ${CONNEXION_SOURCES} ${CONNEXION_HEADERS})
  
+install (TARGETS ConnectionManager DESTINATION release/lib)
+install (FILES types.h DESTINATION release/include)
