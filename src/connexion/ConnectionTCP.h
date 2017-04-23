@@ -22,15 +22,15 @@ public:
 
     virtual EError bind() override;
 
-    virtual EError connect(struct SConnexion &connection) override;
+    virtual EError connect(struct SConnection &connection) override;
 
     virtual EError wait_connexions() override;
 
-    virtual EError accept_connexion(struct SConnexion &connection) override;
+    virtual EError accept_connexion(struct SConnection &connection) override;
 
-    virtual EError send(const struct SConnexion &connection,const uint8_t *buffer,int size, int &sizeSent) override;
+    virtual EError send(const struct SConnection &connection,const uint8_t *buffer,int size, int &sizeSent) override;
 
-    virtual EError receive(const struct SConnexion &connection,uint8_t *buffer,int size, int &sizeReceived) override;
+    virtual EError receive(const struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived) override;
 
     virtual EError disconnect() override;
 

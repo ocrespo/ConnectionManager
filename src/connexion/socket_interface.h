@@ -19,17 +19,17 @@ enum class EMessageReceiveType;
 enum class EMessageSendType;
 enum class ECloseType;
 
-struct SConnexion
+struct SConnection
 {
 public:
-    SConnexion();
-    SConnexion(const SConnexion &obj);
-    SConnexion& operator=(const SConnexion &rhs);
+    SConnection();
+    SConnection(const SConnection &obj);
+    SConnection& operator=(const SConnection &rhs);
 
 private:
-    struct sockaddr_in connexionInfo_;
+    struct sockaddr_in connectionInfo_;
 
-    int connexion_;
+    int connection_;
 
     friend class Socket;
 };
@@ -51,19 +51,19 @@ public:
 
     EError listen_socket(int maxConnexions = MAX_CONNEXTION_LISTEN) noexcept;
 
-    EError accept_connexion(SConnexion &connexion) noexcept;
+    EError accept_connexion(SConnection &connexion) noexcept;
 
-    EError connect_to(SConnexion &connexion) noexcept;
+    EError connect_to(SConnection &connexion) noexcept;
 
-    EError recceive_message(const SConnexion &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept;
+    EError recceive_message(const SConnection &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept;
 
     EError recceive_from_message(Socket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept;
 
-    EError send_message(const SConnexion &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags) const noexcept;
+    EError send_message(const SConnection &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags) const noexcept;
 
     EError send_to_message(const Socket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept;
 
-    EError close_connexion(const SConnexion &connexion,ECloseType close) noexcept;
+    EError close_connexion(const SConnection &connexion,ECloseType close) noexcept;
 
     EError disconnect_socket() noexcept;
 
@@ -80,7 +80,7 @@ private:
     static const int MAX_CONNEXTION_LISTEN;
 
     struct sockaddr_in address_;
-    socklen_t size;
+    socklen_t size_;
 
     int socketId_;
 

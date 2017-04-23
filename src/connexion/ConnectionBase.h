@@ -20,19 +20,19 @@ public:
 
     virtual EError bind();
 
-    virtual EError connect(struct SConnexion &connection);
+    virtual EError connect(struct SConnection &connection);
 
     virtual EError wait_connexions();
 
-    virtual EError accept_connexion(struct SConnexion &connection);
+    virtual EError accept_connexion(struct SConnection &connection);
 
     virtual EError send(const uint8_t *buffer,int size, int &sizeSent);
 
-    virtual EError send(const struct SConnexion &connection,const uint8_t *buffer,int size, int &sizeSent) ;
+    virtual EError send(const struct SConnection &connection,const uint8_t *buffer,int size, int &sizeSent) ;
 
     virtual EError receive(uint8_t *buffer,int size, int &sizeReceived) = 0;
 
-    virtual EError receive(const struct SConnexion &connection,uint8_t *buffer,int size, int &sizeReceived);
+    virtual EError receive(const struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived);
 
     virtual EError disconnect() = 0;
 

@@ -46,7 +46,7 @@ EError ConnectionTCP::bind()
     return socketInterface_->bind_socket();
 }
 
-EError ConnectionTCP::connect(struct SConnexion &connection)
+EError ConnectionTCP::connect(struct SConnection &connection)
 {
     return socketInterface_->connect_to(connection);
 }
@@ -55,16 +55,16 @@ EError ConnectionTCP::wait_connexions()
 {
     return socketInterface_->listen_socket();
 }
-EError ConnectionTCP::accept_connexion(struct SConnexion &connection)
+EError ConnectionTCP::accept_connexion(struct SConnection &connection)
 {
     return socketInterface_->accept_connexion(connection);
 }
-EError ConnectionTCP::send(const struct SConnexion &connection,const uint8_t *buffer,int size, int &sizeSent)
+EError ConnectionTCP::send(const struct SConnection &connection,const uint8_t *buffer,int size, int &sizeSent)
 {
     return socketInterface_->send_message(connection,buffer,size,sizeSent,0);
 }
 
-EError ConnectionTCP::receive(const struct SConnexion &connection,uint8_t *buffer,int size, int &sizeReceived)
+EError ConnectionTCP::receive(const struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived)
 {
     return socketInterface_->recceive_message(connection,buffer,size,sizeReceived,0);
 }
