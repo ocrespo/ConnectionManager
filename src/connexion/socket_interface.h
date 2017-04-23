@@ -31,17 +31,17 @@ private:
 
     int connexion_;
 
-    friend class CSocket;
+    friend class Socket;
 };
 
-class CSocket
+class Socket
 {
 public:
 
-    CSocket();
-    CSocket(const CSocket &obj);
+    Socket();
+    Socket(const Socket &obj);
 
-    ~CSocket();
+    ~Socket();
 
     EError create_socket(ESocketType socketType,EConnexionType connexionType) noexcept;
 
@@ -57,11 +57,11 @@ public:
 
     EError recceive_message(const SConnexion &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept;
 
-    EError recceive_from_message(CSocket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept;
+    EError recceive_from_message(Socket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept;
 
     EError send_message(const SConnexion &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags) const noexcept;
 
-    EError send_to_message(const CSocket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept;
+    EError send_to_message(const Socket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept;
 
     EError close_connexion(const SConnexion &connexion,ECloseType close) noexcept;
 
@@ -69,7 +69,7 @@ public:
 
     EError close_socket() noexcept;
 
-    CSocket& operator=(const CSocket &rhs);
+    Socket& operator=(const Socket &rhs);
 
 
 protected:

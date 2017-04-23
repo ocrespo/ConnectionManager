@@ -11,9 +11,9 @@
 #include <unistd.h>
 #include <cstring>
 
-#include "types.h"
+#include "ConnectionManager_types.h"
 
-const int CSocket::MAX_CONNEXTION_LISTEN = 5;
+const int Socket::MAX_CONNEXTION_LISTEN = 5;
 
 void copy_socket_struct(sockaddr_in &to,const sockaddr_in &from)
 {
@@ -23,26 +23,26 @@ void copy_socket_struct(sockaddr_in &to,const sockaddr_in &from)
     memcpy(to.sin_zero,from.sin_zero,sizeof(from.sin_zero));
 }
 
-CSocket::CSocket():
+Socket::Socket():
         size(sizeof(address_)),
         socketId_{-1}
 {
 
 }
 
-CSocket::CSocket(const CSocket &obj):
+Socket::Socket(const Socket &obj):
         socketId_{obj.socketId_}
 {
     copy_socket_struct(address_,obj.address_);
     size = sizeof(address_);
 }
 
-CSocket::~CSocket()
+Socket::~Socket()
 {
 
 }
 
-CSocket& CSocket::operator=(const CSocket &rhs)
+Socket& Socket::operator=(const Socket &rhs)
 {
 
     if (this == &rhs) return *this;
@@ -75,7 +75,7 @@ SConnexion& SConnexion::operator=(const SConnexion &rhs)
     return *this;
 }
 
-EError CSocket::convert_error() const
+EError Socket::convert_error() const
 {
     switch errno
     {
@@ -178,7 +178,7 @@ EError CSocket::convert_error() const
     return EError::UNKNOWN;
 }
 
-EError CSocket::create_socket(ESocketType socketType,EConnexionType connexionType) noexcept
+EError Socket::create_socket(ESocketType socketType,EConnexionType connexionType) noexcept
 {
     socketId_ =  socket(static_cast<int>(socketType),static_cast<int>(connexionType),0);
 
@@ -189,14 +189,14 @@ EError CSocket::create_socket(ESocketType socketType,EConnexionType connexionTyp
     return EError::NO_ERROR;
 }
 
-void CSocket::set_socket_info(EConnexionType connexionType,uint16_t port,uint32_t address) noexcept
+void Socket::set_socket_info(EConnexionType connexionType,uint16_t port,uint32_t address) noexcept
 {
     address_.sin_family = static_cast<int>(connexionType);
     address_.sin_addr.s_addr = htonl(address);
     address_.sin_port = htons(port);
 }
 
-EError CSocket::bind_socket() noexcept
+EError Socket::bind_socket() noexcept
 {
     if( bind(socketId_,(struct sockaddr *) &address_, sizeof(address_) == -1))
     {
@@ -206,7 +206,7 @@ EError CSocket::bind_socket() noexcept
     return EError::NO_ERROR;
 }
 
-EError CSocket::listen_socket(int maxConnexions) noexcept
+EError Socket::listen_socket(int maxConnexions) noexcept
 {
     if(listen(socketId_,maxConnexions) != 0)
     {
@@ -216,7 +216,7 @@ EError CSocket::listen_socket(int maxConnexions) noexcept
     return EError::NO_ERROR;
 }
 
-EError CSocket::accept_connexion(SConnexion &connexion) noexcept
+EError Socket::accept_connexion(SConnexion &connexion) noexcept
 {
     socklen_t clilen {sizeof(connexion.connexionInfo_)};
     connexion.connexion_ = accept(socketId_,(struct sockaddr *) &connexion.connexionInfo_,&clilen);
@@ -228,7 +228,7 @@ EError CSocket::accept_connexion(SConnexion &connexion) noexcept
     return EError::NO_ERROR;
 }
 
-EError CSocket::connect_to(SConnexion &connexion) noexcept
+EError Socket::connect_to(SConnexion &connexion) noexcept
 {
     connexion.connexion_ = connect(socketId_,(struct sockaddr *) &connexion.connexionInfo_,sizeof(connexion.connexionInfo_));
     if(connexion.connexion_ < -1)
@@ -239,7 +239,7 @@ EError CSocket::connect_to(SConnexion &connexion) noexcept
     return EError::NO_ERROR;
 }
 
-EError CSocket::recceive_message(const SConnexion &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept
+EError Socket::recceive_message(const SConnexion &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept
 {
     sizeRead = recv(connexion.connexion_,buffer,size,flags);
     if(sizeRead < 0)
@@ -250,7 +250,7 @@ EError CSocket::recceive_message(const SConnexion &connexion,uint8_t *buffer,int
     return EError::NO_ERROR;
 }
 
-EError CSocket::recceive_from_message(CSocket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept
+EError Socket::recceive_from_message(Socket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept
 {
     sizeRead = recvfrom(socketId_,buffer,size,flags,(struct sockaddr *) &connexion.address_,&connexion.size);
     if(sizeRead < 0)
@@ -262,7 +262,7 @@ EError CSocket::recceive_from_message(CSocket &connexion,uint8_t *buffer,int siz
 }
 
 
-EError CSocket::send_message(const SConnexion &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags)const noexcept
+EError Socket::send_message(const SConnexion &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags)const noexcept
 {
     sizeSent = send(connexion.connexion_,buffer,size,flags);
     if(sizeSent < 0)
@@ -273,7 +273,7 @@ EError CSocket::send_message(const SConnexion &connexion,const uint8_t *buffer,i
     return EError::NO_ERROR;
 }
 
-EError CSocket::send_to_message(const CSocket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept
+EError Socket::send_to_message(const Socket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept
 {
     sizeSent = sendto(socketId_,buffer,size,0,(struct sockaddr *) &connexion.address_,connexion.size);
     if(sizeSent < 0)
@@ -284,7 +284,7 @@ EError CSocket::send_to_message(const CSocket &connexion,const uint8_t *buffer,i
     return EError::NO_ERROR;
 }
 
-EError CSocket::close_connexion(const SConnexion &connexion,ECloseType close) noexcept
+EError Socket::close_connexion(const SConnexion &connexion,ECloseType close) noexcept
 {
     if(shutdown(connexion.connexion_,static_cast<int>(close)) < 0)
     {
@@ -294,7 +294,7 @@ EError CSocket::close_connexion(const SConnexion &connexion,ECloseType close) no
     return EError::NO_ERROR;
 }
 
-EError CSocket::disconnect_socket() noexcept
+EError Socket::disconnect_socket() noexcept
 {
     if(shutdown(socketId_,static_cast<int>(ECloseType::STOP_ALL)) < 0)
     {
@@ -304,7 +304,7 @@ EError CSocket::disconnect_socket() noexcept
     return EError::NO_ERROR;
 }
 
-EError CSocket::close_socket() noexcept
+EError Socket::close_socket() noexcept
 {
     if(close(socketId_) < 0)
     {

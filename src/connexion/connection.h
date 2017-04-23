@@ -2,7 +2,7 @@
 #define __CONNEXION_CONNEXION_H_
 
 
-#include "types.h"
+#include "ConnectionManager_types.h"
 
 
 namespace connexion
