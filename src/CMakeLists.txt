@@ -9,8 +9,13 @@ set (CONNECTION_HEADERS ${CONNECTION_HEADERS} connection.h ) #Add .h here, just 
 include_directories(${PROJECT_SOURCE_DIR}/connection
                     ${PROJECT_SOURCE_DIR}/socket)
                     
+ 
+ add_subdirectory(${PROJECT_SOURCE_DIR}/socket)
+                   
 add_subdirectory(${PROJECT_SOURCE_DIR}/connection)
-add_subdirectory(${PROJECT_SOURCE_DIR}/socket)
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/manager)
+
 
 add_library(ConnectionManager STATIC ${CONNECTION_SOURCES} ${CONNECTION_HEADERS})
  
