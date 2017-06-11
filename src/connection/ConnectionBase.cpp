@@ -5,7 +5,7 @@
  *      Author: Oscar Crespo
  */
 
-#include "ConnectionBase.h"
+#include "../connection/ConnectionBase.h"
 
 #include "socket_interface.h"
 

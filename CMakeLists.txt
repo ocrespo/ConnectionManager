@@ -55,7 +55,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 set (PROJECT_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/connexion)
+add_subdirectory(${PROJECT_SOURCE_DIR})
+
+#add_subdirectory(${PROJECT_SOURCE_DIR}/connection)
 
 
 #add_library(ConnectionManager STATIC ${PROJECT_SOURCE_DIR}/main.cpp)

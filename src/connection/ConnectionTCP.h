@@ -5,10 +5,10 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNEXION_CONNECTIONTCP_H_
-#define SRC_CONNEXION_CONNECTIONTCP_H_
+#ifndef SRC_CONNECTION_CONNECTIONTCP_H_
+#define SRC_CONNECTION_CONNECTIONTCP_H_
 
-#include "ConnectionBase.h"
+#include "../connection/ConnectionBase.h"
 
 class ConnectionTCP : ConnectionBase
 {
@@ -41,4 +41,4 @@ private:
 
 };
 
-#endif /* SRC_CONNEXION_CONNECTIONTCP_H_ */
+#endif /* SRC_CONNECTION_CONNECTIONTCP_H_ */

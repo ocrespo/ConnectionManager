@@ -5,8 +5,8 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNEXION_CONNECTIONBASE_H_
-#define SRC_CONNEXION_CONNECTIONBASE_H_
+#ifndef SRC_CONNECTION_CONNECTIONBASE_H_
+#define SRC_CONNECTION_CONNECTIONBASE_H_
 
 #include <cinttypes>
 
@@ -51,4 +51,4 @@ private:
 
 };
 
-#endif /* SRC_CONNEXION_CONNECTIONBASE_H_ */
+#endif /* SRC_CONNECTION_CONNECTIONBASE_H_ */

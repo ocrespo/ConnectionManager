@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <cstring>
 
-#include "ConnectionManager_types.h"
+#include "../connection/ConnectionManager_types.h"
 
 const int Socket::MAX_CONNEXTION_LISTEN = 5;
 

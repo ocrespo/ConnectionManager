@@ -5,10 +5,9 @@
  *      Author: Oscar Crespo
  */
 
-#include "ConnectionUDP.h"
+#include "../connection/ConnectionUDP.h"
 
-#include "ConnectionManager_types.h"
-
+#include "../connection/ConnectionManager_types.h"
 #include "socket_interface.h"
 
 

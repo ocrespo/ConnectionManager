@@ -5,10 +5,10 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNEXION_CONNECTIONUDP_H_
-#define SRC_CONNEXION_CONNECTIONUDP_H_
+#ifndef SRC_CONNECTION_CONNECTIONUDP_H_
+#define SRC_CONNECTION_CONNECTIONUDP_H_
 
-#include "ConnectionBase.h"
+#include "../connection/ConnectionBase.h"
 
 
 class ConnectionUDP : ConnectionBase
@@ -37,4 +37,4 @@ private:
 
 };
 
-#endif /* SRC_CONNEXION_CONNECTIONUDP_H_ */
+#endif /* SRC_CONNECTION_CONNECTIONUDP_H_ */
