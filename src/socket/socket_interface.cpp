@@ -11,9 +11,15 @@
 #include <unistd.h>
 #include <cstring>
 
-#include "../connection/ConnectionManager_types.h"
+#include "../connection/connection_types.h"
 
 const int Socket::MAX_CONNEXTION_LISTEN = 5;
+
+using connection::SConnection;
+using connection::EError;
+using connection::ESocketType;
+using connection::EConnexionType;
+using connection::ECloseType;
 
 void copy_socket_struct(sockaddr_in &to,const sockaddr_in &from)
 {
@@ -23,24 +29,6 @@ void copy_socket_struct(sockaddr_in &to,const sockaddr_in &from)
     memcpy(to.sin_zero,from.sin_zero,sizeof(from.sin_zero));
 }
 
-Socket::Socket():
-        size_(sizeof(address_)),
-        socketId_{-1}
-{
-
-}
-
-Socket::Socket(const Socket &obj):
-        socketId_{obj.socketId_}
-{
-    copy_socket_struct(address_,obj.address_);
-    size_ = sizeof(address_);
-}
-
-Socket::~Socket()
-{
-
-}
 
 Socket& Socket::operator=(const Socket &rhs)
 {
@@ -75,8 +63,29 @@ SConnection& SConnection::operator=(const SConnection &rhs)
     return *this;
 }
 
+
+Socket::Socket():
+        size_(sizeof(address_)),
+        socketId_{-1}
+{
+
+}
+
+Socket::Socket(const Socket &obj):
+        socketId_{obj.socketId_}
+{
+    copy_socket_struct(address_,obj.address_);
+    size_ = sizeof(address_);
+}
+
+Socket::~Socket()
+{
+
+}
+
 EError Socket::convert_error() const
 {
+
     switch errno
     {
     case EACCES:
@@ -178,7 +187,7 @@ EError Socket::convert_error() const
     return EError::UNKNOWN;
 }
 
-EError Socket::create_socket(ESocketType socketType,EConnexionType connexionType) noexcept
+connection::EError Socket::create_socket(ESocketType socketType,EConnexionType connexionType) noexcept
 {
     socketId_ =  socket(static_cast<int>(socketType),static_cast<int>(connexionType),0);
 
@@ -186,7 +195,7 @@ EError Socket::create_socket(ESocketType socketType,EConnexionType connexionType
     {
         return convert_error();
     }
-    return EError::NO_ERROR;
+    return connection::EError::NO_ERROR;
 }
 
 void Socket::set_socket_info(EConnexionType connexionType,uint16_t port,uint32_t address) noexcept

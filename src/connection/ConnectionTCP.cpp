@@ -7,9 +7,13 @@
 
 #include "../connection/ConnectionTCP.h"
 
-#include "../connection/ConnectionManager_types.h"
+#include "connection_types.h"
 #include "socket_interface.h"
 
+
+using connection::EError;
+using connection::SConnection;
+using connection::ConnectionTCP;
 
 ConnectionTCP::ConnectionTCP():
 ConnectionBase()

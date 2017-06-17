@@ -5,12 +5,33 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNECTION_CONNECTIONMANAGER_TYPES_H_
-#define SRC_CONNECTION_CONNECTIONMANAGER_TYPES_H_
+#ifndef SRC_CONNECTION_CONNECTION_TYPES_H_
+#define SRC_CONNECTION_CONNECTION_TYPES_H_
 
 #include <errno.h>
 #include <cinttypes>
 #include <netinet/in.h>
+
+class Socket;
+
+namespace connection{
+
+
+
+struct SConnection
+{
+public:
+    SConnection();
+    SConnection(const SConnection &obj);
+    SConnection& operator=(const SConnection &rhs);
+
+private:
+    struct sockaddr_in connectionInfo_;
+
+    int connection_;
+
+    friend class ::Socket;
+};
 
 
 enum class ESocketType : std::int8_t
@@ -84,7 +105,7 @@ enum class EError
     NO_ERROR
 };
 
+}
 
 
-
-#endif /* SRC_CONNECTION_CONNECTIONMANAGER_TYPES_H_ */
+#endif /* SRC_CONNECTION_CONNECTION_TYPES_H_ */

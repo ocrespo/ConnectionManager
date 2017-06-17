@@ -10,40 +10,47 @@
 
 #include <cinttypes>
 
-enum class EError;
 
-class ConnectionBase
+
+
+class Socket;
+namespace connection{
+	class ConnectionBase;
+	struct SConnection;
+	enum class EError;
+
+}
+
+class connection::ConnectionBase
 {
 public:
 
     virtual ~ConnectionBase();
 
-    virtual EError bind();
+    virtual connection::EError bind();
 
-    virtual EError connect(struct SConnection &connection);
+    virtual connection::EError connect(connection::SConnection &connection);
 
-    virtual EError wait_connexions();
+    virtual connection::EError wait_connexions();
 
-    virtual EError accept_connexion(struct SConnection &connection);
+    virtual connection::EError accept_connexion(connection::SConnection &connection);
 
-    virtual EError send(const uint8_t *buffer,int size, int &sizeSent);
+    virtual connection::EError send(const uint8_t *buffer,int size, int &sizeSent);
 
-    virtual EError send(const struct SConnection &connection,const uint8_t *buffer,int size, int &sizeSent) ;
+    virtual connection::EError send(const connection::SConnection &connection,const uint8_t *buffer,int size, int &sizeSent) ;
 
-    virtual EError receive(uint8_t *buffer,int size, int &sizeReceived) = 0;
+    virtual connection::EError receive(uint8_t *buffer,int size, int &sizeReceived);
 
-    virtual EError receive(const struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived);
+    virtual connection::EError receive(const connection::SConnection &connection,uint8_t *buffer,int size, int &sizeReceived);
 
-    virtual EError disconnect() = 0;
-
-    virtual ConnectionBase& operator=(const ConnectionBase &rhs);
+    virtual connection::EError disconnect() = 0;
 
 protected:
 
     ConnectionBase();
     ConnectionBase(const ConnectionBase & con);
 
-    class Socket *socketInterface_;
+    Socket *socketInterface_;
 
 private:
 

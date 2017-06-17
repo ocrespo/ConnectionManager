@@ -12,27 +12,14 @@
 #include <cinttypes>
 
 
-enum class EError;
-enum class ESocketType : std::int8_t;
-enum class EConnexionType : std::int8_t;
-enum class EMessageReceiveType;
-enum class EMessageSendType;
-enum class ECloseType;
+namespace  connection{
+	struct SConnection;
+	enum class EError;
+	enum class ESocketType : std::int8_t;
+	enum class EConnexionType : std::int8_t;
+	enum class ECloseType;
+}
 
-struct SConnection
-{
-public:
-    SConnection();
-    SConnection(const SConnection &obj);
-    SConnection& operator=(const SConnection &rhs);
-
-private:
-    struct sockaddr_in connectionInfo_;
-
-    int connection_;
-
-    friend class Socket;
-};
 
 class Socket
 {
@@ -43,31 +30,31 @@ public:
 
     ~Socket();
 
-    EError create_socket(ESocketType socketType,EConnexionType connexionType) noexcept;
+    connection::EError create_socket(connection::ESocketType socketType,connection::EConnexionType connexionType) noexcept;
 
-    void set_socket_info(EConnexionType connexionType,uint16_t port,uint32_t address = INADDR_ANY) noexcept;
+    void set_socket_info(connection::EConnexionType connexionType,uint16_t port,uint32_t address = INADDR_ANY) noexcept;
 
-    EError bind_socket() noexcept;
+    connection::EError bind_socket() noexcept;
 
-    EError listen_socket(int maxConnexions = MAX_CONNEXTION_LISTEN) noexcept;
+    connection::EError listen_socket(int maxConnexions = MAX_CONNEXTION_LISTEN) noexcept;
 
-    EError accept_connexion(SConnection &connexion) noexcept;
+    connection::EError accept_connexion(connection::SConnection &connexion) noexcept;
 
-    EError connect_to(SConnection &connexion) noexcept;
+    connection::EError connect_to(connection::SConnection &connexion) noexcept;
 
-    EError recceive_message(const SConnection &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept;
+    connection::EError recceive_message(const connection::SConnection &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept;
 
-    EError recceive_from_message(Socket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept;
+    connection::EError recceive_from_message(Socket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept;
 
-    EError send_message(const SConnection &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags) const noexcept;
+    connection::EError send_message(const connection::SConnection &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags) const noexcept;
 
-    EError send_to_message(const Socket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept;
+    connection::EError send_to_message(const Socket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept;
 
-    EError close_connexion(const SConnection &connexion,ECloseType close) noexcept;
+    connection::EError close_connexion(const connection::SConnection &connexion,connection::ECloseType close) noexcept;
 
-    EError disconnect_socket() noexcept;
+    connection::EError disconnect_socket() noexcept;
 
-    EError close_socket() noexcept;
+    connection::EError close_socket() noexcept;
 
     Socket& operator=(const Socket &rhs);
 
@@ -84,7 +71,7 @@ private:
 
     int socketId_;
 
-    EError convert_error() const;
+    connection::EError convert_error() const;
 
 };
 

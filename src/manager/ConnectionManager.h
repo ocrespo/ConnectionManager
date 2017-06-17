@@ -10,7 +10,7 @@
 
 class ConnectionManager {
 public:
-	ConnectionManager();
+
 	virtual ~ConnectionManager();
 
 protected:
@@ -18,7 +18,13 @@ protected:
 
 private:
 
+	ConnectionManager();
+
 	class ConnectionBase *connection;
+
+
+
+	friend class ConnectionBuilder;
 };
 
 #endif /* SRC_MANAGER_CONNECTIONMANAGER_H_ */

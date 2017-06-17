@@ -21,3 +21,15 @@ add_library(ConnectionManager STATIC ${CONNECTION_SOURCES} ${CONNECTION_HEADERS}
  
 install (TARGETS ConnectionManager DESTINATION release/lib)
 install (FILES ${CONNECTION_HEADERS} DESTINATION release/include)
+
+################## TESTS ############################
+add_executable(serverTest ServerTest.cpp)
+target_link_libraries(serverTest ConnectionManager)
+target_include_directories(serverTest PUBLIC release/include)
+
+add_executable(clientTest ClientTest.cpp)
+target_link_libraries(clientTest ConnectionManager)
+target_include_directories(clientTest PUBLIC release/include)
+
+
+

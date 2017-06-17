@@ -2,15 +2,18 @@
 #define __CONNEXION_CONNEXION_H_
 
 
-#include "../connection/ConnectionManager_types.h"
+#include "connection/connection_types.h"
+#include "connection/ConnectionBase.h"
+#include "connection/ConnectionUDP.h"
+#include "connection/ConnectionTCP.h"
 
 
-namespace connexion
+namespace connection
 {
 
-    enum class ESocketType;
+    enum class ESocketType : std::int8_t;
 
-    enum class EConnexionType;
+    enum class EConnexionType : std::int8_t;
 
     enum class EMessageReceiveType;
 
@@ -20,13 +23,13 @@ namespace connexion
 
     enum class EError;
 
-    struct SConnexion;
+    struct SConnection;
 
-    class CConnexionBase;
+    class ConnectionBase;
 
-    class CConnexionUDP;
+    class ConnectionUDP;
 
-    class CConnexionTCP;
+    class ConnectionTCP;
 }
 
 

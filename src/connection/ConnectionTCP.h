@@ -8,9 +8,14 @@
 #ifndef SRC_CONNECTION_CONNECTIONTCP_H_
 #define SRC_CONNECTION_CONNECTIONTCP_H_
 
-#include "../connection/ConnectionBase.h"
+#include "ConnectionBase.h"
 
-class ConnectionTCP : ConnectionBase
+namespace connection{
+	class ConnectionTCP;
+}
+
+
+class connection::ConnectionTCP : connection::ConnectionBase
 {
 public:
 
@@ -20,19 +25,19 @@ public:
     ConnectionTCP(const ConnectionTCP & con);
     virtual ~ConnectionTCP();
 
-    virtual EError bind() override;
+    virtual connection::EError bind() override;
 
-    virtual EError connect(struct SConnection &connection) override;
+    virtual connection::EError connect(struct SConnection &connection) override;
 
-    virtual EError wait_connexions() override;
+    virtual connection::EError wait_connexions() override;
 
-    virtual EError accept_connexion(struct SConnection &connection) override;
+    virtual connection::EError accept_connexion(struct SConnection &connection) override;
 
-    virtual EError send(const struct SConnection &connection,const uint8_t *buffer,int size, int &sizeSent) override;
+    virtual connection::EError send(const struct SConnection &connection,const uint8_t *buffer,int size, int &sizeSent) override;
 
-    virtual EError receive(const struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived) override;
+    virtual connection::EError receive(const struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived) override;
 
-    virtual EError disconnect() override;
+    virtual connection::EError disconnect() override;
 
 
 protected:

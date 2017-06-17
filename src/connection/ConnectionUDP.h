@@ -8,10 +8,14 @@
 #ifndef SRC_CONNECTION_CONNECTIONUDP_H_
 #define SRC_CONNECTION_CONNECTIONUDP_H_
 
-#include "../connection/ConnectionBase.h"
+#include "ConnectionBase.h"
+
+namespace connection{
+	class ConnectionUDP;
+}
 
 
-class ConnectionUDP : ConnectionBase
+class connection::ConnectionUDP : connection::ConnectionBase
 {
 public:
 
@@ -22,13 +26,13 @@ public:
     virtual ~ConnectionUDP();
 
 
-    virtual EError bind() override;
+    virtual connection::EError bind() override;
 
-    virtual EError send(const uint8_t *buffer,int size, int &sizeSent) override;
+    virtual connection::EError send(const uint8_t *buffer,int size, int &sizeSent) override;
 
-    virtual EError receive(uint8_t *buffer,int size, int &sizeReceived) override;
+    virtual connection::EError receive(uint8_t *buffer,int size, int &sizeReceived) override;
 
-    virtual EError disconnect() override;
+    virtual connection::EError disconnect() override;
 
 
 protected:

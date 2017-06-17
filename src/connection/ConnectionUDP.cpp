@@ -5,11 +5,13 @@
  *      Author: Oscar Crespo
  */
 
-#include "../connection/ConnectionUDP.h"
+#include "ConnectionUDP.h"
 
-#include "../connection/ConnectionManager_types.h"
+#include "connection_types.h"
 #include "socket_interface.h"
 
+using connection::EError;
+using connection::ConnectionUDP;
 
 ConnectionUDP::ConnectionUDP():
 ConnectionBase()
