@@ -41,12 +41,12 @@ EError ConnectionBase::connect(){
 
 }
 
-EError ConnectionBase::wait_connexions(){
+EError ConnectionBase::wait_connections(){
 	return EError::NO_ERROR;
 
 }
 
-EError ConnectionBase::accept_connexion(struct SConnection &connection){
+EError ConnectionBase::accept_connection(struct SConnection &connection){
 	return EError::NO_ERROR;
 
 }

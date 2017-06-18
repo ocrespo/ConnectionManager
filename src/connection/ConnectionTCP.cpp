@@ -18,26 +18,26 @@ using connection::ConnectionTCP;
 ConnectionTCP::ConnectionTCP():
 ConnectionBase()
 {
-    socketInterface_->create_socket(ESocketType::STREAM,EConnexionType::IP4);
-    socketInterface_->set_socket_info(EConnexionType::IP4,0,INADDR_ANY);
+    socketInterface_->create_socket(ESocketType::STREAM,EConnectionType::IP4);
+    socketInterface_->set_connection_info(EConnectionType::IP4,0,INADDR_ANY);
 }
 ConnectionTCP::ConnectionTCP(uint16_t port):
 		ConnectionBase()
 {
-	socketInterface_->create_socket(ESocketType::STREAM,EConnexionType::IP4);
-    socketInterface_->set_socket_info(EConnexionType::IP4,port,INADDR_ANY);
+	socketInterface_->create_socket(ESocketType::STREAM,EConnectionType::IP4);
+    socketInterface_->set_connection_info(EConnectionType::IP4,port,INADDR_ANY);
 }
 ConnectionTCP::ConnectionTCP(uint16_t port,uint32_t address):
 		ConnectionBase()
 {
-    socketInterface_->create_socket(ESocketType::STREAM,EConnexionType::IP4);
-    socketInterface_->set_socket_info(EConnexionType::IP4,port,address);
+    socketInterface_->create_socket(ESocketType::STREAM,EConnectionType::IP4);
+    socketInterface_->set_connection_info(EConnectionType::IP4,port,address);
 }
 ConnectionTCP::ConnectionTCP(uint16_t port,const char* address):
 		ConnectionBase()
 {
-    socketInterface_->create_socket(ESocketType::STREAM,EConnexionType::IP4);
-    socketInterface_->set_socket_info(EConnexionType::IP4,port,address);
+    socketInterface_->create_socket(ESocketType::STREAM,EConnectionType::IP4);
+    socketInterface_->set_connection_info(EConnectionType::IP4,port,address);
 }
 ConnectionTCP::ConnectionTCP(const ConnectionTCP & con):
 		ConnectionBase(con)
@@ -60,13 +60,13 @@ EError ConnectionTCP::connect()
     return socketInterface_->connect_to();
 }
 
-EError ConnectionTCP::wait_connexions()
+EError ConnectionTCP::wait_connections()
 {
     return socketInterface_->listen_socket();
 }
-EError ConnectionTCP::accept_connexion(struct SConnection &connection)
+EError ConnectionTCP::accept_connection(struct SConnection &connection)
 {
-    return socketInterface_->accept_connexion(connection);
+    return socketInterface_->accept_connection(connection);
 }
 
 EError ConnectionTCP::send(const uint8_t *buffer,int size, int &sizeSent)

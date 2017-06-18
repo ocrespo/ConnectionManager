@@ -5,8 +5,8 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNECTION_CONNECTIONTCP_H_
-#define SRC_CONNECTION_CONNECTIONTCP_H_
+#ifndef CONNECTIONTCP_H_
+#define CONNECTIONTCP_H_
 
 #include "ConnectionBase.h"
 
@@ -30,9 +30,9 @@ public:
 
     virtual connection::EError connect() override;
 
-    virtual connection::EError wait_connexions() override;
+    virtual connection::EError wait_connections() override;
 
-    virtual connection::EError accept_connexion(struct SConnection &connection) override;
+    virtual connection::EError accept_connection(struct SConnection &connection) override;
 
     virtual connection::EError send(const uint8_t *buffer,int size, int &sizeSent) override;
 

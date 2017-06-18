@@ -5,8 +5,8 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNECTION_CONNECTIONUDP_H_
-#define SRC_CONNECTION_CONNECTIONUDP_H_
+#ifndef CONNECTIONUDP_H_
+#define CONNECTIONUDP_H_
 
 #include "ConnectionBase.h"
 
@@ -21,8 +21,8 @@ public:
 
     ConnectionUDP();
     ConnectionUDP(uint16_t port);
-    ConnectionUDP(uint16_t port,uint32_t address);
     ConnectionUDP(const ConnectionUDP & con);
+
     virtual ~ConnectionUDP();
 
 

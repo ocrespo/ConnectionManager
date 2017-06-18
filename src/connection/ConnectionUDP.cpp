@@ -14,23 +14,17 @@ using connection::EError;
 using connection::ConnectionUDP;
 
 ConnectionUDP::ConnectionUDP():
-ConnectionBase()
+		ConnectionBase()
 {
-    socketInterface_->set_socket_info(EConnexionType::IP4,0,INADDR_ANY);
-    socketInterface_->create_socket(ESocketType::DGRAM,EConnexionType::IP4);
+    socketInterface_->create_socket(ESocketType::DGRAM,EConnectionType::IP4);
 }
 ConnectionUDP::ConnectionUDP(uint16_t port):
 		ConnectionBase()
 {
-    socketInterface_->set_socket_info(EConnexionType::IP4,port,INADDR_ANY);
-    socketInterface_->create_socket(ESocketType::DGRAM,EConnexionType::IP4);
+    socketInterface_->set_connection_info(EConnectionType::IP4,port,INADDR_ANY);
+    socketInterface_->create_socket(ESocketType::DGRAM,EConnectionType::IP4);
 }
-ConnectionUDP::ConnectionUDP(uint16_t port,uint32_t address):
-		ConnectionBase()
-{
-    socketInterface_->set_socket_info(EConnexionType::IP4,port,address);
-    socketInterface_->create_socket(ESocketType::DGRAM,EConnexionType::IP4);
-}
+
 ConnectionUDP::ConnectionUDP(const ConnectionUDP & con):
 		ConnectionBase(con)
 {

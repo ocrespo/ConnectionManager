@@ -11,31 +11,45 @@
 
 #include <string>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-
-void error(const char *msg)
-{
-    perror(msg);
-    exit(1);
-}
 
 int main(){
+
+	connection::ConnectionUDP udp(15731);
+
+	connection::EError error{ udp.bind()};
+
+	if(error !=  connection::EError::NO_ERROR){
+		std::cout<< "ERROR bind "<<  static_cast<std::underlying_type<connection::EError>::type>(error) <<std::endl;
+	}
+
+	connection::SConnection from;
+
+	uint8_t buf[256];
+
+	int received(0);
+
+	while(1){
+		udp.receive(from,buf,256,received);
+
+		std::cout<< buf<< " "<<received <<std::endl;
+
+	}
+
+	return 0;
+}
+
+void TCP(){
+
 	connection::ConnectionTCP tcp(15731);
 
 	connection::EError error{ tcp.bind()};
 
 	if(error !=  connection::EError::NO_ERROR){
 		std::cout<< "ERROR bind "<<  static_cast<std::underlying_type<connection::EError>::type>(error) <<std::endl;
-		return -1;
+		return ;
 	}
 
-	error = tcp.wait_connexions();
+	error = tcp.wait_connections();
 
 	if(error !=  connection::EError::NO_ERROR){
 		std::cout<< "ERROR wait " <<std::endl;
@@ -43,11 +57,11 @@ int main(){
 
 	connection::SConnection connection;
 
-	error = tcp.accept_connexion(connection);
+	error = tcp.accept_connection(connection);
 
 
 	if(error !=  connection::EError::NO_ERROR){
-		std::cout<< "ERROR accept_connexion " <<std::endl;
+		std::cout<< "ERROR accept_connection " <<std::endl;
 	}
 
 
@@ -66,41 +80,4 @@ int main(){
 
 	tcp.disconnect();
 
-
-	return 0;
-
-
-
-
-	/*int sockfd, newsockfd, portno;
-	     socklen_t clilen;
-	     char buffer[256];
-	     struct sockaddr_in serv_addr, cli_addr;
-
-	     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	     if (sockfd < 0)
-	        error("ERROR opening socket");
-	     bzero((char *) &serv_addr, sizeof(serv_addr));
-
-	     serv_addr.sin_family = AF_INET;
-	     serv_addr.sin_addr.s_addr = INADDR_ANY;
-	     serv_addr.sin_port = htons(15731);
-	     if (bind(sockfd, (struct sockaddr *) &serv_addr,
-	              sizeof(serv_addr)) < 0){
-	    	 return -1;
-	              error("ERROR on binding");
-	     }
-	     listen(sockfd,5);
-	     clilen = sizeof(cli_addr);
-	     newsockfd = accept(sockfd,
-	                 (struct sockaddr *) &cli_addr,
-	                 &clilen);
-	     if (newsockfd < 0)
-	          error("ERROR on accept");
-	     bzero(buffer,256);
-
-	     close(newsockfd);
-	     close(sockfd);
-	     return 0;*/
 }
-

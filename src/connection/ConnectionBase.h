@@ -5,8 +5,8 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNECTION_CONNECTIONBASE_H_
-#define SRC_CONNECTION_CONNECTIONBASE_H_
+#ifndef CONNECTIONBASE_H_
+#define CONNECTIONBASE_H_
 
 #include <cinttypes>
 
@@ -31,9 +31,9 @@ public:
 
     virtual connection::EError connect();
 
-    virtual connection::EError wait_connexions();
+    virtual connection::EError wait_connections();
 
-    virtual connection::EError accept_connexion(connection::SConnection &connection);
+    virtual connection::EError accept_connection(connection::SConnection &connection);
 
     virtual connection::EError send(const uint8_t *buffer,int size, int &sizeSent);
 

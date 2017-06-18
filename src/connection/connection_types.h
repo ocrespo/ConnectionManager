@@ -5,8 +5,8 @@
  *      Author: Oscar Crespo
  */
 
-#ifndef SRC_CONNECTION_CONNECTION_TYPES_H_
-#define SRC_CONNECTION_CONNECTION_TYPES_H_
+#ifndef CONNECTION_TYPES_H_
+#define CONNECTION_TYPES_H_
 
 #include <errno.h>
 #include <cinttypes>
@@ -16,25 +16,6 @@ class Socket;
 
 namespace connection{
 
-
-
-struct SConnection
-{
-public:
-    SConnection();
-    SConnection(const SConnection &obj);
-    SConnection& operator=(const SConnection &rhs);
-
-private:
-    struct sockaddr_in connectionInfo_;
-    socklen_t size_;
-
-    int connection_;
-
-    friend class ::Socket;
-};
-
-
 enum class ESocketType : std::int8_t
 {
     STREAM = SOCK_STREAM, // Provides sequenced, reliable, two-way, connection-based byte streams. An out-of-band data transmission mechanism may be supported.
@@ -42,7 +23,7 @@ enum class ESocketType : std::int8_t
     SEQPACKET = SOCK_SEQPACKET //Provides a sequenced, reliable, two-way connection-based data transmission path for datagrams of fixed maximum length; a consumer is required to read an entire packet with each input system call.
 };
 
-enum class EConnexionType : std::int8_t
+enum class EConnectionType : std::int8_t
 {
     IP4 = AF_INET, //IPv4 Internet protocols
     IP6 = AF_INET6 //IPv6 Internet protocols
@@ -105,6 +86,32 @@ enum class EError
     UNKNOWN,
     NO_ERROR
 };
+
+
+
+
+struct SConnection
+{
+public:
+    SConnection();
+    SConnection(EConnectionType connectionType,uint16_t port);
+    SConnection(EConnectionType connectionType,uint16_t port,uint32_t address);
+    SConnection(EConnectionType connectionType,uint16_t port,const char* address);
+    SConnection(const SConnection &obj);
+    SConnection& operator=(const SConnection &rhs);
+
+    void set_connection_info(EConnectionType connectionType,uint16_t port,uint32_t address = INADDR_ANY);
+    void set_connection_info(EConnectionType connectionType,uint16_t port,const char* address);
+
+private:
+    struct sockaddr_in connectionInfo_;
+    socklen_t size_;
+
+    int connection_;
+
+    friend class ::Socket;
+};
+
 
 }
 
