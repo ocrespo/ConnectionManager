@@ -29,7 +29,7 @@ public:
 
     virtual connection::EError bind();
 
-    virtual connection::EError connect(connection::SConnection &connection);
+    virtual connection::EError connect();
 
     virtual connection::EError wait_connexions();
 
@@ -41,7 +41,7 @@ public:
 
     virtual connection::EError receive(uint8_t *buffer,int size, int &sizeReceived);
 
-    virtual connection::EError receive(const connection::SConnection &connection,uint8_t *buffer,int size, int &sizeReceived);
+    virtual connection::EError receive(connection::SConnection &connection,uint8_t *buffer,int size, int &sizeReceived);
 
     virtual connection::EError disconnect() = 0;
 

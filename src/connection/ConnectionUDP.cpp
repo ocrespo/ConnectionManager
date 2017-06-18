@@ -48,14 +48,14 @@ EError ConnectionUDP::bind()
     return socketInterface_->bind_socket();
 }
 
-EError ConnectionUDP::send(const uint8_t *buffer,int size, int &sizeSent)
+EError ConnectionUDP::send(const connection::SConnection &connection,const uint8_t *buffer,int size, int &sizeSent)
 {
-    return socketInterface_->send_to_message(*socketInterface_,buffer,size,sizeSent);
+    return socketInterface_->send_to_message(connection,buffer,size,sizeSent);
 }
 
-EError ConnectionUDP::receive(uint8_t *buffer,int size, int &sizeReceived)
+EError ConnectionUDP::receive(connection::SConnection &connection,uint8_t *buffer,int size, int &sizeReceived)
 {
-    return socketInterface_->recceive_from_message(*socketInterface_,buffer,size,sizeReceived,0);
+    return socketInterface_->recceive_from_message(connection,buffer,size,sizeReceived,0);
 }
 
 EError ConnectionUDP::disconnect()

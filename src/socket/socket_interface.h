@@ -34,21 +34,27 @@ public:
 
     void set_socket_info(connection::EConnexionType connexionType,uint16_t port,uint32_t address = INADDR_ANY) noexcept;
 
+    void set_socket_info(connection::EConnexionType connexionType,uint16_t port,const char* address) noexcept;
+
     connection::EError bind_socket() noexcept;
 
     connection::EError listen_socket(int maxConnexions = MAX_CONNEXTION_LISTEN) noexcept;
 
     connection::EError accept_connexion(connection::SConnection &connexion) noexcept;
 
-    connection::EError connect_to(connection::SConnection &connexion) noexcept;
+    connection::EError connect_to() noexcept;
+
+    connection::EError recceive_message(uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept;
 
     connection::EError recceive_message(const connection::SConnection &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept;
 
-    connection::EError recceive_from_message(Socket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept;
+    connection::EError recceive_from_message(connection::SConnection &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept;
+
+    connection::EError send_message(const uint8_t *buffer,int size,int &sizeSent, int flags)const noexcept;
 
     connection::EError send_message(const connection::SConnection &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags) const noexcept;
 
-    connection::EError send_to_message(const Socket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept;
+    connection::EError send_to_message(const connection::SConnection &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept;
 
     connection::EError close_connexion(const connection::SConnection &connexion,connection::ECloseType close) noexcept;
 

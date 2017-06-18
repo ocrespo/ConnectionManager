@@ -27,6 +27,7 @@ public:
 
 private:
     struct sockaddr_in connectionInfo_;
+    socklen_t size_;
 
     int connection_;
 

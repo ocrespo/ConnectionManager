@@ -6,10 +6,12 @@
  */
 
 #include "socket_interface.h"
-#include <iostream>
-#include <sys/types.h>
+
 #include <unistd.h>
 #include <cstring>
+
+#include <arpa/inet.h>
+
 
 #include "../connection/connection_types.h"
 
@@ -42,12 +44,14 @@ Socket& Socket::operator=(const Socket &rhs)
 }
 
 SConnection::SConnection():
+		size_(sizeof(struct sockaddr_in)),
         connection_(-1)
 {
 
 }
 
 SConnection::SConnection(const SConnection &obj):
+		size_(obj.size_),
         connection_(obj.connection_)
 {
     copy_socket_struct(this->connectionInfo_,obj.connectionInfo_);
@@ -68,7 +72,7 @@ Socket::Socket():
         size_(sizeof(address_)),
         socketId_{-1}
 {
-
+	bzero(&address_, sizeof(address_));
 }
 
 Socket::Socket(const Socket &obj):
@@ -189,7 +193,7 @@ EError Socket::convert_error() const
 
 connection::EError Socket::create_socket(ESocketType socketType,EConnexionType connexionType) noexcept
 {
-    socketId_ =  socket(static_cast<int>(socketType),static_cast<int>(connexionType),0);
+    socketId_ =  socket(static_cast<int>(connexionType),static_cast<int>(socketType),0);
 
     if(socketId_ < -1)
     {
@@ -205,9 +209,16 @@ void Socket::set_socket_info(EConnexionType connexionType,uint16_t port,uint32_t
     address_.sin_port = htons(port);
 }
 
+void Socket::set_socket_info(EConnexionType connexionType,uint16_t port,const char* address) noexcept
+{
+    address_.sin_family = static_cast<int>(connexionType);
+    address_.sin_addr.s_addr = inet_addr(address);
+    address_.sin_port = htons(port);
+}
+
 EError Socket::bind_socket() noexcept
 {
-    if( bind(socketId_,(struct sockaddr *) &address_, sizeof(address_) == -1))
+    if( bind(socketId_,(struct sockaddr *) &address_, sizeof(address_) ) == -1)
     {
         return convert_error();
     }
@@ -237,16 +248,26 @@ EError Socket::accept_connexion(SConnection &connexion) noexcept
     return EError::NO_ERROR;
 }
 
-EError Socket::connect_to(SConnection &connexion) noexcept
+EError Socket::connect_to() noexcept
 {
-    connexion.connection_ = connect(socketId_,(struct sockaddr *) &connexion.connectionInfo_,sizeof(connexion.connectionInfo_));
-    if(connexion.connection_ < -1)
-    {
+	 if(connect(socketId_,(struct sockaddr *) &address_,sizeof(address_)) < 0){
         return convert_error();
     }
 
     return EError::NO_ERROR;
 }
+
+EError Socket::recceive_message(uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept
+{
+    sizeRead = recv(socketId_,buffer,size,flags);
+    if(sizeRead < 0)
+    {
+       return convert_error();
+    }
+
+    return EError::NO_ERROR;
+}
+
 
 EError Socket::recceive_message(const SConnection &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) const noexcept
 {
@@ -259,9 +280,9 @@ EError Socket::recceive_message(const SConnection &connexion,uint8_t *buffer,int
     return EError::NO_ERROR;
 }
 
-EError Socket::recceive_from_message(Socket &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept
+EError Socket::recceive_from_message(SConnection &connexion,uint8_t *buffer,int size,int &sizeRead, int flags) noexcept
 {
-    sizeRead = recvfrom(socketId_,buffer,size,flags,(struct sockaddr *) &connexion.address_,&connexion.size_);
+    sizeRead = recvfrom(socketId_,buffer,size,flags,(struct sockaddr *) &connexion.connectionInfo_,&connexion.size_);
     if(sizeRead < 0)
     {
        return convert_error();
@@ -270,6 +291,16 @@ EError Socket::recceive_from_message(Socket &connexion,uint8_t *buffer,int size,
     return EError::NO_ERROR;
 }
 
+EError Socket::send_message(const uint8_t *buffer,int size,int &sizeSent, int flags)const noexcept
+{
+    sizeSent = send(socketId_,buffer,size,flags);
+    if(sizeSent < 0)
+    {
+       return convert_error();
+    }
+
+    return EError::NO_ERROR;
+}
 
 EError Socket::send_message(const SConnection &connexion,const uint8_t *buffer,int size,int &sizeSent, int flags)const noexcept
 {
@@ -282,9 +313,9 @@ EError Socket::send_message(const SConnection &connexion,const uint8_t *buffer,i
     return EError::NO_ERROR;
 }
 
-EError Socket::send_to_message(const Socket &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept
+EError Socket::send_to_message(const SConnection &connexion,const uint8_t *buffer,int size,int &sizeSent) noexcept
 {
-    sizeSent = sendto(socketId_,buffer,size,0,(struct sockaddr *) &connexion.address_,connexion.size_);
+    sizeSent = sendto(socketId_,buffer,size,0,(struct sockaddr *) &connexion.connectionInfo_,connexion.size_);
     if(sizeSent < 0)
     {
        return convert_error();

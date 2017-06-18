@@ -28,9 +28,9 @@ public:
 
     virtual connection::EError bind() override;
 
-    virtual connection::EError send(const uint8_t *buffer,int size, int &sizeSent) override;
+    virtual connection::EError send(const connection::SConnection &connection,const uint8_t *buffer,int size, int &sizeSent) override;
 
-    virtual connection::EError receive(uint8_t *buffer,int size, int &sizeReceived) override;
+    virtual connection::EError receive(connection::SConnection &connection,uint8_t *buffer,int size, int &sizeReceived) override;
 
     virtual connection::EError disconnect() override;
 

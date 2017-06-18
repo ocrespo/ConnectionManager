@@ -15,7 +15,7 @@ using connection::SConnection;
 using connection::ConnectionBase;
 
 ConnectionBase::ConnectionBase():
-			socketInterface_{new Socket()}
+			socketInterface_{new Socket}
 {
 
 }
@@ -36,7 +36,7 @@ EError ConnectionBase::bind(){
 	return EError::NO_ERROR;
 }
 
-EError ConnectionBase::connect(struct SConnection &connection){
+EError ConnectionBase::connect(){
 	return EError::NO_ERROR;
 
 }
@@ -53,7 +53,6 @@ EError ConnectionBase::accept_connexion(struct SConnection &connection){
 
 EError ConnectionBase::send(const uint8_t *buffer,int size, int &sizeSent){
 	return EError::NO_ERROR;
-
 }
 
 EError ConnectionBase::send(const struct SConnection &connection,const uint8_t *buffer,int size, int &sizeSent){
@@ -63,10 +62,8 @@ EError ConnectionBase::send(const struct SConnection &connection,const uint8_t *
 
 EError ConnectionBase::receive(uint8_t *buffer,int size, int &sizeReceived){
 	return EError::NO_ERROR;
-
 }
 
-EError ConnectionBase::receive(const struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived){
+EError ConnectionBase::receive(struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived){
 	return EError::NO_ERROR;
-
 }
