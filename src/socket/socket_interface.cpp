@@ -246,11 +246,12 @@ void Socket::set_connection_info(EConnectionType connectionType,uint16_t port,co
 {
 	set_socket_info(address_,connectionType,port,address);
 }
-
+#include <iostream>
 EError Socket::bind_socket() noexcept
 {
     if( bind(socketId_,(struct sockaddr *) &address_, sizeof(address_) ) == -1)
     {
+    	std::cout<<strerror(errno)<<std::endl;
         return convert_error();
     }
 

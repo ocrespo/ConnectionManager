@@ -18,6 +18,7 @@ namespace connection{
 	class ConnectionBase;
 	struct SConnection;
 	enum class EError;
+	enum class ECloseType;
 
 }
 
@@ -42,6 +43,8 @@ public:
     virtual connection::EError receive(uint8_t *buffer,int size, int &sizeReceived);
 
     virtual connection::EError receive(connection::SConnection &connection,uint8_t *buffer,int size, int &sizeReceived);
+
+    virtual connection::EError close_connection(const SConnection &connection,connection::ECloseType close);
 
     virtual connection::EError disconnect() = 0;
 

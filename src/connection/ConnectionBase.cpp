@@ -67,3 +67,8 @@ EError ConnectionBase::receive(uint8_t *buffer,int size, int &sizeReceived){
 EError ConnectionBase::receive(struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived){
 	return EError::NO_ERROR;
 }
+
+EError ConnectionBase::close_connection(const SConnection &connection,ECloseType close){
+	return EError::NO_ERROR;
+}
+

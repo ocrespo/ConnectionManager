@@ -89,6 +89,11 @@ EError ConnectionTCP::receive(struct SConnection &connection,uint8_t *buffer,int
     return socketInterface_->recceive_message(connection,buffer,size,sizeReceived,0);
 }
 
+EError ConnectionTCP::close_connection(const SConnection &connection,ECloseType close)
+{
+    return socketInterface_->close_connection(connection,close);
+}
+
 EError ConnectionTCP::disconnect()
 {
     return socketInterface_->disconnect_socket();

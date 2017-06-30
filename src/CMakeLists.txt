@@ -32,4 +32,7 @@ target_link_libraries(clientTest ConnectionManager)
 target_include_directories(clientTest PUBLIC release/include)
 
 
+add_subdirectory(${PROJECT_SOURCE_DIR}/Hackday)
+
+
 

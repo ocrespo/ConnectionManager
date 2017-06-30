@@ -42,6 +42,8 @@ public:
 
     virtual connection::EError receive(struct SConnection &connection,uint8_t *buffer,int size, int &sizeReceived) override;
 
+    virtual connection::EError close_connection(const SConnection &connection,connection::ECloseType close) override;
+
     virtual connection::EError disconnect() override;
 
 
