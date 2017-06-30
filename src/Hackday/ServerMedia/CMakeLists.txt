@@ -1,0 +1,3 @@
+add_executable(hackMediaServer main.cpp Server.cpp Sender.cpp Receiver.cpp)
+target_link_libraries(hackMediaServer ConnectionManager)
+target_include_directories(hackMediaServer PUBLIC release/include)
